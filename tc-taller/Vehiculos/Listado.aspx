@@ -9,7 +9,22 @@
                 CssClass="btn btn-primary" OnClick="btnNuevo_Click" />
         </div>
     </div>
-
+    <div class="card p-3 mb-4">
+    <div class="row g-2 align-items-center">
+        <div class="col-md-4">
+            <asp:TextBox ID="txtBusqueda" runat="server" CssClass="form-control"
+                placeholder="Buscar por patente..." />
+        </div>
+        <div class="col-auto">
+            <asp:Button ID="btnBuscar" runat="server" Text="Buscar"
+                CssClass="btn btn-primary" OnClick="btnBuscar_Click" CausesValidation="false" />
+        </div>
+        <div class="col-auto">
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar"
+                CssClass="btn btn-secondary" OnClick="btnLimpiar_Click" CausesValidation="false" />
+        </div>
+    </div>
+        </div>
     <asp:GridView ID="gvVehiculos" runat="server" AutoGenerateColumns="false"
         CssClass="table table-striped table-bordered"
         EmptyDataText="No hay vehículos registrados."

@@ -31,6 +31,12 @@ namespace tc_taller.Admin
             ddlMarca.DataBind();
             ddlMarca.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- Seleccione --", "0"));
 
+            ddlFiltroMarca.DataSource = marcaNegocio.Listar();
+            ddlFiltroMarca.DataTextField = "Nombre";
+            ddlFiltroMarca.DataValueField = "IdMarca";
+            ddlFiltroMarca.DataBind();
+            ddlFiltroMarca.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- Todas las marcas --", "0"));
+
             var categoriaNegocio = new CategoriaRepuestoNegocio();
             ddlCategoria.DataSource = categoriaNegocio.Listar();
             ddlCategoria.DataTextField = "Descripcion";
@@ -39,10 +45,17 @@ namespace tc_taller.Admin
             ddlCategoria.Items.Insert(0, new System.Web.UI.WebControls.ListItem("-- Seleccione --", "0"));
         }
 
-        private void CargarGrilla()
+        private void CargarGrilla(int idMarca = 0)
         {
             var negocio = new RepuestoNegocio();
-            gvRepuestos.DataSource = negocio.Listar();
+            if (idMarca == 0) 
+            { 
+                gvRepuestos.DataSource = negocio.Listar();
+            }
+            else 
+            {
+                gvRepuestos.DataSource = negocio.FiltrarPorMarca(idMarca);
+            }
             gvRepuestos.DataBind();
         }
 
@@ -103,6 +116,17 @@ namespace tc_taller.Admin
         protected void btnCancelar_Click(object sender, EventArgs e)
         {
             LimpiarForm();
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            CargarGrilla(int.Parse(ddlFiltroMarca.SelectedValue));
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            ddlFiltroMarca.SelectedIndex = 0;
+            CargarGrilla();
         }
 
         private void LimpiarForm()

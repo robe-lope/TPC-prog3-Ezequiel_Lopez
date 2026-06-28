@@ -122,5 +122,26 @@ namespace Negocio
             v.Cliente.Apellido = (string)datos.Lector["ApellidoCliente"];
             return v;
         }
+
+        public List<Vehiculo> FiltrarPorPatente(string busqueda)
+        {
+            List<Vehiculo> lista = new List<Vehiculo>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.SetearConsulta(@"SELECT v.*, c.Nombre AS NombreCliente, c.Apellido AS ApellidoCliente
+                               FROM Vehiculos v
+                               INNER JOIN Clientes c ON v.IdCliente = c.IdCliente
+                               WHERE v.Activo = 1 AND (
+                               v.Patente LIKE @busqueda)");
+                datos.SetearParametro("@busqueda", "%" + busqueda + "%");
+                datos.EjecutarLectura();
+                while (datos.Lector.Read())
+                    lista.Add(Mapear(datos));
+                return lista;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
+        }
     }
 }

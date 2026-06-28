@@ -25,10 +25,17 @@ namespace tc_taller.Vehiculos
             }
         }
 
-        private void CargarGrilla()
+        private void CargarGrilla(string patente = "")
         {
             var negocio = new VehiculoNegocio();
-            gvVehiculos.DataSource = negocio.Listar();
+            if (string.IsNullOrEmpty(patente)) 
+            {
+                gvVehiculos.DataSource = negocio.Listar();
+            }
+            else
+            {
+                gvVehiculos.DataSource = negocio.FiltrarPorPatente(patente);
+            }
             gvVehiculos.DataBind();
         }
 
@@ -49,6 +56,17 @@ namespace tc_taller.Vehiculos
         {
             var btn = (System.Web.UI.WebControls.LinkButton)sender;
             Response.Redirect("Form.aspx?id=" + btn.CommandArgument);
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            CargarGrilla(txtBusqueda.Text.Trim());
+        }
+
+        protected void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            txtBusqueda.Text = "";
+            CargarGrilla();
         }
     }
 }

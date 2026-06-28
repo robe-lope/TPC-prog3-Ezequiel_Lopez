@@ -129,5 +129,43 @@ namespace Negocio
                 datos.CerrarConexion();
             }
         }
+
+        public List<Repuesto> FiltrarPorMarca(int idMarca)
+        {
+            List<Repuesto> lista = new List<Repuesto>();
+            AccesoDatos datos = new AccesoDatos();
+            Repuesto aux = new Repuesto();
+            try
+            {
+                datos.SetearConsulta(@"SELECT r.*, m.Nombre AS NombreMarca, c.Descripcion AS DescCategoria
+                FROM Repuestos r 
+                INNER JOIN MarcasRepuesto m ON r.IdMarca = m.IdMarca
+                INNER JOIN CategoriasRepuesto c ON r.IdCategoria = c.IdCategoria
+                WHERE r.Activo = 1 and R.idMarca = @m");
+                datos.SetearParametro("@m", idMarca);
+                datos.EjecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    aux.IdRepuesto = (int)datos.Lector["IdRepuesto"];
+                    aux.Codigo = (string)datos.Lector["Codigo"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.PrecioCompra = (decimal)datos.Lector["PrecioCompra"];
+                    aux.PrecioVenta = (decimal)datos.Lector["PrecioVenta"];
+                    aux.StockActual = (int)datos.Lector["StockActual"];
+                    aux.StockMinimo = (int)datos.Lector["StockMinimo"];
+                    aux.Activo = (bool)datos.Lector["Activo"];
+                    aux.Marca = new MarcaRepuesto();
+                    aux.Marca.IdMarca = (int)datos.Lector["IdMarca"];
+                    aux.Marca.Nombre = (string)datos.Lector["NombreMarca"];
+                    aux.Categoria = new CategoriaRepuesto();
+                    aux.Categoria.IdCategoria = (int)datos.Lector["IdCategoria"];
+                    aux.Categoria.Descripcion = (string)datos.Lector["DescCategoria"];
+                    lista.Add(aux);
+                }
+                return lista;
+            }
+            catch (Exception ex) { throw ex; }
+            finally { datos.CerrarConexion(); }
+        }
     }
 }

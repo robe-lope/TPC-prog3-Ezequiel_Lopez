@@ -79,6 +79,21 @@
                 CssClass="btn btn-secondary" OnClick="btnCancelar_Click" CausesValidation="false" />
         </div>
     </div>
+    <div class="card p-3 mb-4">
+    <div class="row g-2 align-items-center">
+        <div class="col-md-3">
+            <asp:DropDownList ID="ddlFiltroMarca" runat="server" CssClass="form-select" />
+        </div>
+        <div class="col-auto">
+            <asp:Button ID="btnBuscar" runat="server" Text="Filtrar"
+                CssClass="btn btn-primary" OnClick="btnBuscar_Click" CausesValidation="false" />
+        </div>
+        <div class="col-auto">
+            <asp:Button ID="btnLimpiar" runat="server" Text="Limpiar"
+                CssClass="btn btn-secondary" OnClick="btnLimpiar_Click" CausesValidation="false" />
+        </div>
+    </div>
+</div>
 
     <asp:GridView ID="gvRepuestos" runat="server" AutoGenerateColumns="false"
         CssClass="table table-striped table-bordered"
