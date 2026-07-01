@@ -41,21 +41,38 @@ namespace tc_taller.Admin
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            var servicio = new Servicio();
-            servicio.IdServicio = int.Parse(hfId.Value);
-            servicio.Descripcion = txtDescripcion.Text.Trim();
-            servicio.PrecioBase = decimal.Parse(txtPrecioBase.Text.Trim());
-            servicio.TipoServicio = new Dominio.TipoServicio();
-            servicio.TipoServicio.IdTipoServicio = int.Parse(ddlTipo.SelectedValue);
+            try
+            {
+                var negocio = new ServicioNegocio();
+                var servicios = negocio.Listar().Find(s => s.Descripcion == txtDescripcion.Text.Trim());
+                if (servicios == null)
+                {
+                    var servicio = new Servicio();
+                    servicio.IdServicio = int.Parse(hfId.Value);
+                    servicio.Descripcion = txtDescripcion.Text.Trim();
+                    servicio.PrecioBase = decimal.Parse(txtPrecioBase.Text.Trim());
+                    servicio.TipoServicio = new Dominio.TipoServicio();
+                    servicio.TipoServicio.IdTipoServicio = int.Parse(ddlTipo.SelectedValue);
 
-            var negocio = new ServicioNegocio();
-            if (servicio.IdServicio == 0)
-                negocio.Agregar(servicio);
-            else
-                negocio.Modificar(servicio);
+                    if (servicio.IdServicio == 0)
+                        negocio.Agregar(servicio);
+                    else
+                        negocio.Modificar(servicio);
+                }
+                else
+                {
+                    lblError.Text = "Ya existe un servicio con esa descripción.";
+                    lblError.Visible = true;
+                }   
+                LimpiarForm();
+                CargarGrilla();
+            }
+            catch (Exception ex)
+            {
 
-            LimpiarForm();
-            CargarGrilla();
+                
+            }
+            
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)

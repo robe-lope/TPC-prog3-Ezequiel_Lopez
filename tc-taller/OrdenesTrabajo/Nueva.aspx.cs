@@ -83,13 +83,21 @@ namespace tc_taller.OrdenesTrabajo
 
             var negocio = new OrdenDeTrabajoNegocio();
             int idOrden = negocio.Agregar(ot);
-
-            var otCompleta = negocio.GetById(idOrden);
-            if (otCompleta != null)
+            try
             {
-                var mail = new MailNegocio();
-                mail.EnviarMailOTCreada(otCompleta.Vehiculo.Cliente.Email, otCompleta.Vehiculo.Cliente.Nombre, idOrden, ot.Descripcion);
+                var otCompleta = negocio.GetById(idOrden);
+                if (otCompleta != null)
+                {
+                    var mail = new MailNegocio();
+                    mail.EnviarMailOTCreada(otCompleta.Vehiculo.Cliente.Email, otCompleta.Vehiculo.Cliente.Nombre, idOrden, ot.Descripcion);
+                }
             }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
 
             Response.Redirect("Detalle.aspx?id=" + idOrden);
         }

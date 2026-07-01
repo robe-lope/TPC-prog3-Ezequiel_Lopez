@@ -28,18 +28,27 @@ namespace tc_taller.Admin
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            var tipo = new Dominio.TipoServicio();
-            tipo.Descripcion = txtDescripcion.Text.Trim();
-            tipo.IdTipoServicio = int.Parse(hfId.Value);
+            try
+            {
+                var tipo = new Dominio.TipoServicio();
+                tipo.Descripcion = txtDescripcion.Text.Trim();
+                tipo.IdTipoServicio = int.Parse(hfId.Value);
 
-            var negocio = new TipoServicioNegocio();
-            if (tipo.IdTipoServicio == 0)
-                negocio.Agregar(tipo);
-            else
-                negocio.Modificar(tipo);
+                var negocio = new TipoServicioNegocio();
+                if (tipo.IdTipoServicio == 0)
+                    negocio.Agregar(tipo);
+                else
+                    negocio.Modificar(tipo);
 
-            LimpiarForm();
-            CargarGrilla();
+                LimpiarForm();
+                CargarGrilla();
+            }
+            catch (Exception ex)
+            {
+
+                
+            }
+            
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)

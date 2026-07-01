@@ -57,6 +57,7 @@
             </div>
         </div>
         <div class="d-flex gap-2">
+            <asp:Label ID="lblError" runat="server" CssClass="alert alert-danger d-block mb-3" Visible="false" />
             <asp:Button ID="btnGuardar" runat="server" Text="Guardar" 
                 CssClass="btn btn-primary" OnClick="btnGuardar_Click" />
             <asp:Button ID="btnCancelar" runat="server" Text="Cancelar" 

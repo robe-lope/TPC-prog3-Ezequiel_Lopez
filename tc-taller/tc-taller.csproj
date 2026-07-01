@@ -76,9 +76,11 @@
     <Content Include="Clientes\Form.aspx" />
     <Content Include="Clientes\Listado.aspx" />
     <Content Include="Global.asax" />
+    <Content Include="OlvideMiPass.aspx" />
     <Content Include="OrdenesTrabajo\Detalle.aspx" />
     <Content Include="OrdenesTrabajo\Listado.aspx" />
     <Content Include="OrdenesTrabajo\Nueva.aspx" />
+    <Content Include="ResetPass.aspx" />
     <Content Include="Vehiculos\Form.aspx" />
     <Content Include="Vehiculos\Listado.aspx" />
     <Content Include="Web.config" />
@@ -152,6 +154,13 @@
     <Compile Include="Master.Master.designer.cs">
       <DependentUpon>Master.Master</DependentUpon>
     </Compile>
+    <Compile Include="OlvideMiPass.aspx.cs">
+      <DependentUpon>OlvideMiPass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OlvideMiPass.aspx.designer.cs">
+      <DependentUpon>OlvideMiPass.aspx</DependentUpon>
+    </Compile>
     <Compile Include="OrdenesTrabajo\Detalle.aspx.cs">
       <DependentUpon>Detalle.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -187,6 +196,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ResetPass.aspx.cs">
+      <DependentUpon>ResetPass.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResetPass.aspx.designer.cs">
+      <DependentUpon>ResetPass.aspx</DependentUpon>
     </Compile>
     <Compile Include="Vehiculos\Form.aspx.cs">
       <DependentUpon>Form.aspx</DependentUpon>

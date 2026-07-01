@@ -60,23 +60,32 @@ namespace tc_taller.Vehiculos
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            var vehiculo = new Vehiculo();
-            vehiculo.IdVehiculo = idVehiculo;
-            vehiculo.Patente = txtPatente.Text.Trim().ToUpper();
-            vehiculo.Marca = txtMarca.Text.Trim();
-            vehiculo.Modelo = txtModelo.Text.Trim();
-            vehiculo.Anio = int.Parse(txtAnio.Text.Trim());
-            vehiculo.Color = txtColor.Text.Trim();
-            vehiculo.Kilometraje = int.Parse(txtKilometraje.Text.Trim());
-            vehiculo.Cliente = new Cliente { IdCliente = int.Parse(ddlCliente.SelectedValue) };
+            try
+            {
+                var vehiculo = new Vehiculo();
+                vehiculo.IdVehiculo = idVehiculo;
+                vehiculo.Patente = txtPatente.Text.Trim().ToUpper();
+                vehiculo.Marca = txtMarca.Text.Trim();
+                vehiculo.Modelo = txtModelo.Text.Trim();
+                vehiculo.Anio = int.Parse(txtAnio.Text.Trim());
+                vehiculo.Color = txtColor.Text.Trim();
+                vehiculo.Kilometraje = int.Parse(txtKilometraje.Text.Trim());
+                vehiculo.Cliente = new Cliente { IdCliente = int.Parse(ddlCliente.SelectedValue) };
 
-            var negocio = new VehiculoNegocio();
-            if (idVehiculo == 0)
-                negocio.Agregar(vehiculo);
-            else
-                negocio.Modificar(vehiculo);
+                var negocio = new VehiculoNegocio();
+                if (idVehiculo == 0)
+                    negocio.Agregar(vehiculo);
+                else
+                    negocio.Modificar(vehiculo);
 
-            Response.Redirect("Listado.aspx");
+                Response.Redirect("Listado.aspx");
+            }
+            catch (Exception ex)
+            {
+                lblError.Visible = true;
+                lblError.Text = "Error al guardar. " + ex.Message;
+            }
+            
         }
     }
 }

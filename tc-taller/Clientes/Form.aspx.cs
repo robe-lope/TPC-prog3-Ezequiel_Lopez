@@ -48,24 +48,35 @@ namespace tc_taller.Clientes
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            var cliente = new Cliente
+            try
             {
-                IdCliente = idCliente,
-                Nombre = txtNombre.Text.Trim(),
-                Apellido = txtApellido.Text.Trim(),
-                DNI = txtDNI.Text.Trim(),
-                Telefono = txtTelefono.Text.Trim(),
-                Email = txtEmail.Text.Trim(),
-                Direccion = txtDireccion.Text.Trim()
-            };
+                var cliente = new Cliente
+                {
+                    IdCliente = idCliente,
+                    Nombre = txtNombre.Text.Trim(),
+                    Apellido = txtApellido.Text.Trim(),
+                    DNI = txtDNI.Text.Trim(),
+                    Telefono = txtTelefono.Text.Trim(),
+                    Email = txtEmail.Text.Trim(),
+                    Direccion = txtDireccion.Text.Trim()
+                };
 
-            var negocio = new ClienteNegocio();
-            if (idCliente == 0)
-                negocio.Agregar(cliente);
-            else
-                negocio.Modificar(cliente);
+                var negocio = new ClienteNegocio();
+                if (idCliente == 0)
+                    negocio.Agregar(cliente);
+                else
+                    negocio.Modificar(cliente);
+                Response.Redirect("Listado.aspx");
+            }
+            catch (Exception ex)
+            {
+                lblError.Visible = true;
+                lblError.Text = "Error al guardar. " + ex.Message;
 
-            Response.Redirect("Listado.aspx");
+            }
+            
+
+            
         }
     }
 }

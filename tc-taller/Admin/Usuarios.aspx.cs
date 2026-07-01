@@ -41,23 +41,32 @@ namespace tc_taller.Admin
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            var usuario = new Usuario();
-            usuario.IdUsuario = int.Parse(hfId.Value);
-            usuario.Nombre = txtNombre.Text.Trim();
-            usuario.Apellido = txtApellido.Text.Trim();
-            usuario.Email = txtEmail.Text.Trim();
-            usuario.Username = txtUsername.Text.Trim();
-            usuario.Password = txtPassword.Text.Trim();
-            usuario.Perfil = new Perfil { IdPerfil = int.Parse(ddlPerfil.SelectedValue) };
+            try
+            {
+                var usuario = new Usuario();
+                usuario.IdUsuario = int.Parse(hfId.Value);
+                usuario.Nombre = txtNombre.Text.Trim();
+                usuario.Apellido = txtApellido.Text.Trim();
+                usuario.Email = txtEmail.Text.Trim();
+                usuario.Username = txtUsername.Text.Trim();
+                usuario.Password = txtPassword.Text.Trim();
+                usuario.Perfil = new Perfil { IdPerfil = int.Parse(ddlPerfil.SelectedValue) };
 
-            var negocio = new UsuarioNegocio();
-            if (usuario.IdUsuario == 0)
-                negocio.Agregar(usuario);
-            else
-                negocio.Modificar(usuario);
+                var negocio = new UsuarioNegocio();
+                if (usuario.IdUsuario == 0)
+                    negocio.Agregar(usuario);
+                else
+                    negocio.Modificar(usuario);
 
-            LimpiarForm();
-            CargarGrilla();
+                LimpiarForm();
+                CargarGrilla();
+            }
+            catch (Exception ex)
+            {
+
+                lblError.Text = "Ocurrió un error al guardar el usuario: " + ex.Message;
+            }
+            
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)

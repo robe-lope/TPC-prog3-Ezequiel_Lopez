@@ -27,18 +27,35 @@ namespace tc_taller.Admin
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            var categoria = new Dominio.CategoriaRepuesto();
-            categoria.Descripcion = txtDescripcion.Text.Trim();
-            categoria.IdCategoria = int.Parse(hfId.Value);
+            try
+            {
+                var negocio = new CategoriaRepuestoNegocio();
+                var categorias = negocio.Listar().Find(c => c.Descripcion == txtDescripcion.Text.Trim());
+                if (categorias == null)
+                {
+                    var categoria = new Dominio.CategoriaRepuesto();
+                    categoria.Descripcion = txtDescripcion.Text.Trim();
+                    categoria.IdCategoria = int.Parse(hfId.Value);
 
-            var negocio = new CategoriaRepuestoNegocio();
-            if (categoria.IdCategoria == 0)
-                negocio.Agregar(categoria);
-            else
-                negocio.Modificar(categoria);
+                    if (categoria.IdCategoria == 0)
+                        negocio.Agregar(categoria);
+                    else
+                        negocio.Modificar(categoria);
+                }
+                else
+                {
+                    lblError.Text = "Ya existe una categoría con esa descripción.";
+                    lblError.Visible = true;
+                }
+                LimpiarForm();
+                CargarGrilla();
+            }
+            catch (Exception ex)
+            {
 
-            LimpiarForm();
-            CargarGrilla();
+                
+            }
+            
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)

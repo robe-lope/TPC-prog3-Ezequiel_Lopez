@@ -1,0 +1,41 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OlvideMiPass.aspx.cs" Inherits="tc_taller.OlvideMiPass" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>Olvidé mi contraseña — Taller Mecánico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <form id="form1" runat="server">
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-4">
+                    <div class="card shadow p-4">
+                        <h3 class="text-center mb-2">🔧 Taller Mecánico</h3>
+                        <h5 class="text-center text-muted mb-4">Recuperar contraseña</h5>
+
+                        <asp:Label ID="lblMensaje" runat="server" Visible="false" />
+
+                        <div class="mb-3">
+                            <label class="form-label">Ingresá tu email</label>
+                            <asp:TextBox ID="txtEmail" runat="server" CssClass="form-control" TextMode="Email" />
+                            <asp:RequiredFieldValidator runat="server" ControlToValidate="txtEmail"
+                                ErrorMessage="El email es requerido." CssClass="text-danger" Display="Dynamic" />
+                            <asp:RegularExpressionValidator runat="server" ControlToValidate="txtEmail"
+                                ValidationExpression="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                                ErrorMessage="Formato de email inválido." CssClass="text-danger" Display="Dynamic" />
+                        </div>
+                        <asp:Button ID="btnEnviar" runat="server" Text="Enviar link de recuperación"
+                            CssClass="btn btn-primary w-100" OnClick="btnEnviar_Click" />
+                        <div class="text-center mt-3">
+                            <a href="Login.aspx" class="text-muted" style="font-size:0.9rem;">← Volver al login</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

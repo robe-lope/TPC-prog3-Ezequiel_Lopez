@@ -61,25 +61,34 @@ namespace tc_taller.Admin
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            var repuesto = new Repuesto();
-            repuesto.IdRepuesto = int.Parse(hfId.Value);
-            repuesto.Codigo = txtCodigo.Text.Trim();
-            repuesto.Descripcion = txtDescripcion.Text.Trim();
-            repuesto.PrecioCompra = decimal.Parse(txtPrecioCompra.Text.Trim());
-            repuesto.PrecioVenta = decimal.Parse(txtPrecioVenta.Text.Trim());
-            repuesto.StockActual = int.Parse(txtStockActual.Text.Trim());
-            repuesto.StockMinimo = int.Parse(txtStockMinimo.Text.Trim());
-            repuesto.Marca = new MarcaRepuesto { IdMarca = int.Parse(ddlMarca.SelectedValue) };
-            repuesto.Categoria = new Dominio.CategoriaRepuesto { IdCategoria = int.Parse(ddlCategoria.SelectedValue) };
+            try
+            {
+                var repuesto = new Repuesto();
+                repuesto.IdRepuesto = int.Parse(hfId.Value);
+                repuesto.Codigo = txtCodigo.Text.Trim();
+                repuesto.Descripcion = txtDescripcion.Text.Trim();
+                repuesto.PrecioCompra = decimal.Parse(txtPrecioCompra.Text.Trim());
+                repuesto.PrecioVenta = decimal.Parse(txtPrecioVenta.Text.Trim());
+                repuesto.StockActual = int.Parse(txtStockActual.Text.Trim());
+                repuesto.StockMinimo = int.Parse(txtStockMinimo.Text.Trim());
+                repuesto.Marca = new MarcaRepuesto { IdMarca = int.Parse(ddlMarca.SelectedValue) };
+                repuesto.Categoria = new Dominio.CategoriaRepuesto { IdCategoria = int.Parse(ddlCategoria.SelectedValue) };
 
-            var negocio = new RepuestoNegocio();
-            if (repuesto.IdRepuesto == 0)
-                negocio.Agregar(repuesto);
-            else
-                negocio.Modificar(repuesto);
+                var negocio = new RepuestoNegocio();
+                if (repuesto.IdRepuesto == 0)
+                    negocio.Agregar(repuesto);
+                else
+                    negocio.Modificar(repuesto);
 
-            LimpiarForm();
-            CargarGrilla();
+                LimpiarForm();
+                CargarGrilla();
+            }
+            catch (Exception ex)
+            {
+                lblError.Visible = true;
+                lblError.Text = ex.Message;
+            }
+            
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)

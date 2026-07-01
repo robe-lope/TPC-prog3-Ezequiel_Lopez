@@ -28,18 +28,35 @@ namespace tc_taller.Admin
 
         protected void btnGuardar_Click(object sender, EventArgs e)
         {
-            var marca = new MarcaRepuesto();
-            marca.Nombre = txtNombre.Text.Trim();
-            marca.IdMarca = int.Parse(hfId.Value);
+            try
+            {
+                var negocio = new MarcaRepuestoNegocio();
+                var marcas = negocio.Listar().Find(m => m.Nombre == txtNombre.Text.Trim());
+                if (marcas == null)
+                {
+                    var marca = new MarcaRepuesto();
+                    marca.Nombre = txtNombre.Text.Trim();
+                    marca.IdMarca = int.Parse(hfId.Value);
 
-            var negocio = new MarcaRepuestoNegocio();
-            if (marca.IdMarca == 0)
-                negocio.Agregar(marca);
-            else
-                negocio.Modificar(marca);
+                    if (marca.IdMarca == 0)
+                        negocio.Agregar(marca);
+                    else
+                        negocio.Modificar(marca);
+                }
+                else
+                {
+                    lblError.Text = "Ya existe una marca con ese nombre.";
+                    lblError.Visible = true;
+                }
+                LimpiarForm();
+                CargarGrilla();
+            }
+            catch (Exception ex)
+            {
 
-            LimpiarForm();
-            CargarGrilla();
+
+            }
+            
         }
 
         protected void btnEditar_Click(object sender, EventArgs e)
